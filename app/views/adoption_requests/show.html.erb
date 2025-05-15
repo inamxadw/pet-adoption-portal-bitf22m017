@@ -1,0 +1,91 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Adoption Application Details</h1>
+    <div>
+      <% if @adoption_request.user == current_user %>
+        <%= link_to "← Back to My Applications", adoption_requests_path, class: "text-blue-600 hover:text-blue-800" %>
+      <% else %>
+        <%= link_to "← Back to Applications", adoption_requests_path(role: 'owner'), class: "text-blue-600 hover:text-blue-800" %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="flex flex-col md:flex-row">
+      <div class="w-full md:w-1/3">
+        <% if @adoption_request.pet.image.attached? %>
+          <%= image_tag @adoption_request.pet.image, class: "w-full h-64 md:h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-64 md:h-full bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No image</span>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="w-full md:w-2/3 p-6">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="flex items-center">
+              <h2 class="text-2xl font-bold mr-3">
+                <%= link_to @adoption_request.pet.name, pet_path(@adoption_request.pet), class: "text-blue-600 hover:text-blue-800" %>
+              </h2>
+              <span class="<%= @adoption_request.status == 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                             @adoption_request.status == 'approved' ? 'bg-green-100 text-green-800' : 
+                             @adoption_request.status == 'rejected' ? 'bg-red-100 text-red-800' : 
+                             'bg-gray-100 text-gray-800' %> 
+                    px-3 py-1 rounded-full text-sm font-medium">
+                <%= @adoption_request.status.capitalize %>
+              </span>
+            </div>
+            <p class="text-gray-600 mt-1">
+              <%= @adoption_request.pet.breed %> <%= @adoption_request.pet.species %>, <%= @adoption_request.pet.age %> years old
+            </p>
+          </div>
+          
+          <div class="text-right">
+            <p class="text-gray-600">Application submitted</p>
+            <p class="font-semibold"><%= @adoption_request.created_at.strftime("%B %d, %Y") %></p>
+          </div>
+        </div>
+        
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Pet Owner Information</h3>
+            <div class="bg-gray-50 p-4 rounded">
+              <p><strong>Name:</strong> <%= @adoption_request.pet.owner.name %></p>
+              <p><strong>Contact:</strong> <%= @adoption_request.pet.owner.phone %></p>
+              <p><strong>Email:</strong> <%= @adoption_request.pet.owner.email %></p>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Applicant Information</h3>
+            <div class="bg-gray-50 p-4 rounded">
+              <p><strong>Name:</strong> <%= @adoption_request.user.name %></p>
+              <p><strong>Contact:</strong> <%= @adoption_request.user.phone %></p>
+              <p><strong>Email:</strong> <%= @adoption_request.user.email %></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <h3 class="text-lg font-semibold mb-2">Application Message</h3>
+          <div class="bg-gray-50 p-4 rounded">
+            <%= @adoption_request.message %>
+          </div>
+        </div>
+        
+        <% if @adoption_request.pet.owner == current_user && @adoption_request.pending? %>
+          <div class="mt-6 flex justify-end space-x-3">
+            <%= button_to "Approve Application", adoption_request_path(@adoption_request, status: 'approved'), method: :patch, class: "inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded" %>
+            <%= button_to "Reject Application", adoption_request_path(@adoption_request, status: 'rejected'), method: :patch, class: "inline-block bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" %>
+          </div>
+        <% elsif @adoption_request.user == current_user && @adoption_request.pending? %>
+          <div class="mt-6 flex justify-end">
+            <%= button_to "Withdraw Application", adoption_request_path(@adoption_request), method: :delete, data: { confirm: "Are you sure you want to withdraw this application?" }, class: "inline-block bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

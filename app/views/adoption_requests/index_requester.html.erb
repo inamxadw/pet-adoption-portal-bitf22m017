@@ -1,0 +1,61 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">My Adoption Applications</h1>
+  
+  <% if @adoption_requests.empty? %>
+    <div class="bg-gray-50 p-8 rounded-lg text-center">
+      <p class="text-lg text-gray-600 mb-4">You haven't submitted any adoption applications yet.</p>
+      <a href="<%= pets_path %>" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+        Browse Available Pets
+      </a>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 gap-6">
+      <% @adoption_requests.each do |request| %>
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-1/4">
+              <% if request.pet.image.attached? %>
+                <%= image_tag request.pet.image, class: "w-full h-48 md:h-full object-cover" %>
+              <% else %>
+                <div class="w-full h-48 md:h-full bg-gray-200 flex items-center justify-center">
+                  <span class="text-gray-500">No image</span>
+                </div>
+              <% end %>
+            </div>
+            <div class="w-full md:w-3/4 p-6">
+              <div class="flex justify-between items-start">
+                <h2 class="text-xl font-bold">
+                  <%= link_to request.pet.name, pet_path(request.pet), class: "text-blue-600 hover:text-blue-800" %>
+                </h2>
+                <span class="<%= request.status == 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                               request.status == 'approved' ? 'bg-green-100 text-green-800' : 
+                               request.status == 'rejected' ? 'bg-red-100 text-red-800' : 
+                               'bg-gray-100 text-gray-800' %> 
+                      px-3 py-1 rounded-full text-sm font-medium">
+                  <%= request.status.capitalize %>
+                </span>
+              </div>
+              
+              <div class="mt-2 text-gray-600">
+                <p><strong>Submitted:</strong> <%= request.created_at.strftime("%B %d, %Y") %></p>
+                <p><strong>Owner:</strong> <%= request.pet.owner.name %></p>
+                <p><strong>Message:</strong></p>
+                <div class="mt-1 p-3 bg-gray-50 rounded">
+                  <%= request.message %>
+                </div>
+              </div>
+              
+              <div class="mt-4 flex justify-end">
+                <%= link_to "View Details", adoption_request_path(request), class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2" %>
+                
+                <% if request.pending? %>
+                  <%= button_to "Withdraw", adoption_request_path(request), method: :delete, data: { confirm: "Are you sure you want to withdraw this application?" }, class: "inline-block bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div> 

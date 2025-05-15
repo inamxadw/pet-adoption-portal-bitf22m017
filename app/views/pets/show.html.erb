@@ -1,0 +1,142 @@
+<div class="max-w-3xl mx-auto">
+  <div class="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900"><%= @pet.name %></h1>
+      <p class="mt-2 text-sm text-gray-700">
+        Posted by <%= @pet.owner.name %> • <%= time_ago_in_words(@pet.created_at) %> ago
+      </p>
+    </div>
+    <% if current_user == @pet.owner %>
+      <div class="mt-4 flex space-x-3 md:mt-0">
+        <%= link_to edit_pet_path(@pet), class: "inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+          <svg class="-ml-1 mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+          <span>Edit</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="py-6">
+    <div class="flex flex-col md:flex-row md:space-x-6">
+      <div class="md:w-1/2">
+        <% if @pet.image.attached? %>
+          <%= image_tag @pet.image, class: "w-full h-auto rounded-lg shadow-lg" %>
+        <% end %>
+      </div>
+
+      <div class="mt-6 md:mt-0 md:w-1/2">
+        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Species</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @pet.species %></dd>
+          </div>
+
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Breed</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @pet.breed %></dd>
+          </div>
+
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Age</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= pluralize(@pet.age, 'year') %> old</dd>
+          </div>
+
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Status</dt>
+            <dd class="mt-1 text-sm">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                <%= case @pet.status
+                    when 'available'
+                      'bg-green-100 text-green-800'
+                    when 'pending'
+                      'bg-yellow-100 text-yellow-800'
+                    when 'adopted'
+                      'bg-blue-100 text-blue-800'
+                    end %>">
+                <%= @pet.status.capitalize %>
+              </span>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="mt-6">
+          <h3 class="text-sm font-medium text-gray-500">About</h3>
+          <div class="mt-2 prose prose-sm text-gray-900">
+            <%= simple_format @pet.description %>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="text-sm font-medium text-gray-500">Contact Information</h3>
+          <dl class="mt-2 text-sm text-gray-500">
+            <div class="mt-1">
+              <dt class="inline">Phone:</dt>
+              <dd class="inline ml-1"><%= format_phone_number(@pet.owner.phone) %></dd>
+            </div>
+            <div class="mt-1">
+              <dt class="inline">Email:</dt>
+              <dd class="inline ml-1"><%= @pet.owner.email %></dd>
+            </div>
+          </dl>
+        </div>
+
+        <% if user_signed_in? && current_user != @pet.owner %>
+          <div class="mt-6">
+            <% if @pet.available? %>
+              <%= form_with(model: [@pet, AdoptionRequest.new], local: true, class: "space-y-4") do |f| %>
+                <div>
+                  <%= f.label :message, "Why would you be a great home for #{@pet.name}?", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= f.text_area :message, rows: 4, 
+                        class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                        placeholder: "Tell us why you'd be a perfect match... (minimum 50 characters)" %>
+                  </div>
+                  <p class="mt-2 text-sm text-gray-500">Please provide detailed information about your living situation, experience with pets, and why you think you'd be a great match for <%= @pet.name %>.</p>
+                </div>
+
+                <%= f.submit "Request to Adopt", 
+                    class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+              <% end %>
+            <% elsif @pet.pending? %>
+              <div class="rounded-md bg-yellow-50 p-4">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <h3 class="text-sm font-medium text-yellow-800">
+                      This pet has a pending adoption request
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <div class="rounded-md bg-blue-50 p-4">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800">
+                      This pet has been adopted
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 border-t border-gray-200 pt-6">
+    <%= link_to "Back to Pets", pets_path, class: "text-sm font-medium text-indigo-600 hover:text-indigo-500" %>
+  </div>
+</div> 

@@ -1,0 +1,205 @@
+<div class="relative bg-white">
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-y-0 h-full w-full" aria-hidden="true">
+      <div class="relative h-full">
+        <svg class="absolute right-full transform translate-y-1/3 translate-x-1/4 md:translate-y-1/2 sm:translate-x-1/2 lg:translate-x-full" width="404" height="784" fill="none" viewBox="0 0 404 784">
+          <defs>
+            <pattern id="e229dbec-10e9-49ee-8ec3-0286ca089edf" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+            </pattern>
+          </defs>
+          <rect width="404" height="784" fill="url(#e229dbec-10e9-49ee-8ec3-0286ca089edf)" />
+        </svg>
+        <svg class="absolute left-full transform -translate-y-3/4 -translate-x-1/4 sm:-translate-x-1/2 md:-translate-y-1/2 lg:-translate-x-3/4" width="404" height="784" fill="none" viewBox="0 0 404 784">
+          <defs>
+            <pattern id="d2a68204-c383-44b1-b99f-42ccff4e5365" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+            </pattern>
+          </defs>
+          <rect width="404" height="784" fill="url(#d2a68204-c383-44b1-b99f-42ccff4e5365)" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="relative pt-6 pb-16 sm:pb-24">
+      <main class="mt-16 mx-auto max-w-7xl px-4 sm:mt-24">
+        <div class="text-center">
+          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <span class="block xl:inline">Find your perfect</span>
+            <span class="block text-indigo-600 xl:inline">pet companion</span>
+          </h1>
+          <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+            Connect with loving pets waiting for their forever homes. Browse through our available pets or list your pet for adoption.
+          </p>
+          <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <%= link_to pets_path, class: "w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" do %>
+              Browse Available Pets
+            <% end %>
+            <% if user_signed_in? %>
+              <%= link_to new_pet_path, class: "mt-3 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10 sm:mt-0 sm:ml-3" do %>
+                List Your Pet
+              <% end %>
+            <% else %>
+              <%= link_to new_user_registration_path, class: "mt-3 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10 sm:mt-0 sm:ml-3" do %>
+                Join Now
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Featured Pets Section -->
+  <div class="bg-gray-50 pt-16 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">Featured Pets</h2>
+        <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          Meet some of our adorable pets looking for their forever homes
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <% Pet.available.includes(:owner, image_attachment: :blob).order(created_at: :desc).limit(6).each do |pet| %>
+          <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+            <div class="flex-shrink-0">
+              <% if pet.image.attached? %>
+                <%= image_tag pet.image, class: "h-48 w-full object-cover" %>
+              <% end %>
+            </div>
+            <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+              <div class="flex-1">
+                <div class="flex items-center">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <%= pet.species %>
+                  </span>
+                  <span class="ml-2 text-sm text-gray-500">
+                    <%= pet.breed %>
+                  </span>
+                </div>
+                <div class="block mt-2">
+                  <p class="text-xl font-semibold text-gray-900"><%= pet.name %></p>
+                  <p class="mt-3 text-base text-gray-500"><%= truncate(pet.description, length: 150) %></p>
+                </div>
+              </div>
+              <div class="mt-6">
+                <%= link_to pet_path(pet), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700" do %>
+                  Learn More
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-10 text-center">
+        <%= link_to pets_path, class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200" do %>
+          View All Pets
+          <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section -->
+  <div class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">How It Works</h2>
+        <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          Simple steps to either adopt a pet or list one for adoption
+        </p>
+      </div>
+
+      <div class="mt-12">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <!-- For Adopters -->
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="text-center">
+              <h3 class="text-lg font-medium text-gray-900">For Pet Adopters</h3>
+              <ul class="mt-4 space-y-4 text-left">
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">1.</span>
+                  <p class="ml-3 text-base text-gray-500">Browse available pets and find your perfect match</p>
+                </li>
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">2.</span>
+                  <p class="ml-3 text-base text-gray-500">Submit an adoption request with your information</p>
+                </li>
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">3.</span>
+                  <p class="ml-3 text-base text-gray-500">Connect with the pet owner and finalize the adoption</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- For Pet Owners -->
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="text-center">
+              <h3 class="text-lg font-medium text-gray-900">For Pet Owners</h3>
+              <ul class="mt-4 space-y-4 text-left">
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">1.</span>
+                  <p class="ml-3 text-base text-gray-500">Create a detailed profile for your pet</p>
+                </li>
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">2.</span>
+                  <p class="ml-3 text-base text-gray-500">Review adoption requests from potential adopters</p>
+                </li>
+                <li class="flex items-start">
+                  <span class="flex-shrink-0 h-6 w-6 text-indigo-600">3.</span>
+                  <p class="ml-3 text-base text-gray-500">Choose the best forever home for your pet</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Why Choose Us -->
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="text-center">
+              <h3 class="text-lg font-medium text-gray-900">Why Choose Us</h3>
+              <ul class="mt-4 space-y-4 text-left">
+                <li class="flex items-start">
+                  <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <p class="ml-3 text-base text-gray-500">Safe and secure adoption process</p>
+                </li>
+                <li class="flex items-start">
+                  <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <p class="ml-3 text-base text-gray-500">Direct communication with pet owners</p>
+                </li>
+                <li class="flex items-start">
+                  <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <p class="ml-3 text-base text-gray-500">Verified user profiles and listings</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if user_signed_in? %>
+  <div class="bg-white">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+      <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        <span class="block">Welcome back, <%= current_user.email %></span>
+      </h2>
+      <div class="mt-8 flex">
+        <%= link_to "View Profile", edit_user_registration_path, class: "inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" %>
+      </div>
+    </div>
+  </div>
+<% end %>

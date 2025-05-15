@@ -1,0 +1,70 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Submit Adoption Application</h1>
+    <div>
+      <%= link_to "← Back to Pet", pet_path(@pet), class: "text-blue-600 hover:text-blue-800" %>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="md:col-span-1">
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <% if @pet.image.attached? %>
+          <%= image_tag @pet.image, class: "w-full h-64 object-cover" %>
+        <% else %>
+          <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No image</span>
+          </div>
+        <% end %>
+        
+        <div class="p-4">
+          <h2 class="text-xl font-bold mb-2"><%= @pet.name %></h2>
+          <p class="text-gray-600 mb-1"><%= @pet.breed %> <%= @pet.species %>, <%= @pet.age %> years old</p>
+          <p class="text-gray-600 mb-4">Owner: <%= @pet.owner.name %></p>
+          
+          <div class="bg-gray-50 p-3 rounded mb-4">
+            <h3 class="font-medium mb-2">About <%= @pet.name %></h3>
+            <p class="text-gray-700"><%= @pet.description %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="md:col-span-2">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-4">Your Application</h2>
+        
+        <%= form_with(model: [@pet, @adoption_request], local: true) do |form| %>
+          <% if @adoption_request.errors.any? %>
+            <div class="bg-red-50 text-red-700 p-4 rounded mb-4">
+              <h3 class="font-bold mb-2">Please fix the following errors:</h3>
+              <ul class="list-disc pl-5">
+                <% @adoption_request.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          
+          <div class="mb-4">
+            <%= form.label :message, "Tell us why you'd be a good fit for #{@pet.name}", class: "block text-gray-700 font-medium mb-2" %>
+            <%= form.text_area :message, rows: 8, class: "w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline", placeholder: "Please include information about your living situation, experience with pets, and why you're interested in adopting this pet (minimum 50 characters)." %>
+            <p class="text-gray-600 text-sm mt-1">Minimum 50 characters required</p>
+          </div>
+          
+          <div class="bg-gray-50 p-4 rounded mb-6">
+            <h3 class="font-medium mb-2">Your contact information</h3>
+            <p class="text-gray-700 mb-1"><strong>Name:</strong> <%= current_user.name %></p>
+            <p class="text-gray-700 mb-1"><strong>Phone:</strong> <%= current_user.phone %></p>
+            <p class="text-gray-700 mb-1"><strong>Email:</strong> <%= current_user.email %></p>
+            <p class="text-gray-700"><strong>Address:</strong> <%= current_user.address %></p>
+          </div>
+          
+          <div class="flex justify-end">
+            <%= form.submit "Submit Application", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

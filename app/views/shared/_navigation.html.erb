@@ -1,0 +1,40 @@
+<nav class="bg-white shadow">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <div class="flex-shrink-0 flex items-center">
+          <%= link_to root_path, class: "text-xl font-bold text-indigo-600" do %>
+            Pet Adoption Portal
+          <% end %>
+        </div>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <%= link_to "Home", root_path, class: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+          <% if user_signed_in? %>
+            <%= link_to "Post a Pet", new_pet_path, class: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+            <% if current_user.pets.exists? %>
+              <%= link_to "Adoption Requests", adoption_requests_path(role: 'owner'), class: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+            <% end %>
+            <%= link_to "My Applications", adoption_requests_path, class: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="hidden sm:ml-6 sm:flex sm:items-center">
+        <% if user_signed_in? %>
+          <div class="ml-3 relative">
+            <div class="flex items-center space-x-4">
+              <%= link_to profile_path, class: "text-sm font-medium text-gray-500 hover:text-gray-700" do %>
+                <span>My Profile</span>
+              <% end %>
+              <%= button_to destroy_user_session_path, method: :delete, class: "text-sm font-medium text-gray-500 hover:text-gray-700" do %>
+                <span>Sign Out</span>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: "text-sm font-medium text-gray-500 hover:text-gray-700" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav> 

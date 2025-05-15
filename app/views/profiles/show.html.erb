@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-gray-100 py-12">
+  <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+      <div class="p-6 bg-white border-b border-gray-200">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl font-bold text-gray-900">My Profile</h1>
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900">Personal Information</h3>
+            <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Name</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= @user.name %></dd>
+              </div>
+
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Email</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= @user.email %></dd>
+              </div>
+
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Phone</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= format_phone_number(@user.phone) %></dd>
+              </div>
+
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Address</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= @user.address %></dd>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-6">
+            <h3 class="text-lg font-medium text-gray-900">About Me</h3>
+            <div class="mt-4">
+              <p class="text-sm text-gray-600"><%= @user.bio %></p>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-6">
+            <h3 class="text-lg font-medium text-gray-900">Account Statistics</h3>
+            <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Member Since</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= @user.created_at.strftime("%B %d, %Y") %></dd>
+              </div>
+              
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+                <dd class="mt-1 text-sm text-gray-900"><%= @user.updated_at.strftime("%B %d, %Y") %></dd>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
