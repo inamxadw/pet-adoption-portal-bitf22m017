@@ -27,10 +27,8 @@ A web application built with Ruby on Rails that facilitates pet adoption by conn
 4. Start the server with `rails server`
 5. Visit `http://localhost:3000` in your browser
 
-## Screenshots
-
-Coming soon!
-
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+This project is made only for academic purposes. No commerical intent.

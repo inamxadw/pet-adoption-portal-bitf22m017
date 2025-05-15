@@ -5,7 +5,7 @@ module ApplicationExtensions
     Rails.cache.clear if Rails.cache.respond_to?(:clear)
     Rails.application.assets.cache.clear if Rails.application.assets && Rails.application.assets.respond_to?(:cache) && Rails.application.assets.cache.respond_to?(:clear)
   end
-  
+
   # Helper to check if running on Windows
   def self.windows?
     Gem.win_platform? || RUBY_PLATFORM =~ /mswin|mingw|cygwin/

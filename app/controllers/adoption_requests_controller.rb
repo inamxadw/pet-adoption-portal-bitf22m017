@@ -6,7 +6,7 @@ class AdoptionRequestsController < ApplicationController
   before_action :ensure_requester, only: [:destroy]
 
   def index
-    if params[:role] == 'owner'
+    if params[:role] =='owner'
       @adoption_requests = current_user.received_adoption_requests.includes(:pet, :user).order(created_at: :desc)
       render 'index_owner'
     else
