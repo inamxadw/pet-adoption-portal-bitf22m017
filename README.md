@@ -38,6 +38,7 @@ This project is made only for academic purposes. No commerical intent.
 Submission 1 has been completed around 10 PM on 15/05/2025 (within the deadline given). I am writing this at 7:53 PM as per told by the professor in the group.
 
 1	Project Initialization --> Completed
+
 2	User Authentication	--> Completed
 3	User Profiles --> Completed
 4	Post Pet for Adoption --> Completed
