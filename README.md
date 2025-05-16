@@ -33,20 +33,28 @@ This project is open source and available under the [MIT License](LICENSE).
 
 This project is made only for academic purposes. No commerical intent.
 
-Here is the project update as per the Project Tasks document submitted earlier to professor, Usman Azmat.
+## Submission 1 details:
 
-Task No.	Task Name	Description	Status	Priority	Submission Phase
-1	Project Initialization	Set up Rails with PostgreSQL, Git, and essential gems	Completed	High	Submission 1
-2	User Authentication	Implement login/registration	Completed	High	Submission 1
-3	User Profiles	Allow users to view and edit their profile info	Completed	Low	Submission 1
-4	Post Pet for Adoption	Users can post details of pets for adoption	Completed	High	Submission 1
-5	Request Adoption	Request Adoption	Completed	High	Submission 1
-6	Pet Details	Design individual pet detail pages	Completed	Medium	Submission 1
-7	Navigation & Homepage	Build homepage + navbar with role-based navigation	Completed	Medium	Submission 1
-8	Pet Listings	Create an index page with basic filters (breed, age)	Completed	Medium	Submission 1
-9	Manual Testing	Check form flows, roles, and dashboard access	Completed	Medium	Submission 1
-10	Chat Feature	Implement a basic chat feature between adopter and pet owner	Not Started	Medium	Submission 2
-11	Deployment	Deploy to Heroku + SSL + custom domain	Not Started	High	Submission 2
-12	Final Testing	Full end-to-end testing of workflows	Not Started	High	Submission 2
-13	Documentation	Write user/developer manuals	Not Started	High	Submission 2
-14	Feedback Loop	Gather feedback and refine app	Not Started	Medium	Submission 2
+Submission 1 has been completed around 10 PM on 15/05/2025 (within the deadline given). I am writing this at 7:53 PM as per told by the professor in the group.
+
+1	Project Initialization --> Completed
+2	User Authentication	--> Completed
+3	User Profiles --> Completed
+4	Post Pet for Adoption --> Completed
+5	Request Adoption --> Completed
+6	Pet Details	Design individual pet detail pages --> Completed
+7	Navigation & Homepage --> Completed
+8	Pet Listings --> Completed
+9	Manual Testing	--> Completed
+
+## Submission 1 details:
+
+Submission 2 is pending currently (7:54 PM - 16/05/2025)
+
+10	Chat Feature --> Not Started
+11	Deployment --> Not Started
+12	Final Testing --> Not Started
+13	Documentation --> Not Started
+14	Feedback Loop --> Not Started
+
+Refer to the original doc of the project tasks list --> https://docs.google.com/spreadsheets/d/1f3afC0OwQHprut96RTxuQlv_FwiG7i8Pc1foenJKKOw/edit?gid=0#gid=0
