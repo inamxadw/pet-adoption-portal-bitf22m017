@@ -11,15 +11,8 @@ A web application built with Ruby on Rails that facilitates pet adoption by conn
 - **Pet Listings**: Browse available pets with filtering options
 - **Responsive Design**: Modern UI built with Tailwind CSS
 
-## Technical Details
 
-- Ruby 3.4.2
-- Rails 8.0.2
-- SQLite (Development)
-- Tailwind CSS for styling
-- Devise for authentication
-
-## Getting Started
+## Run the project locally this way!
 
 1. Clone the repository
 2. Run `bundle install`
@@ -40,12 +33,19 @@ Submission 1 has been completed around 10 PM on 15/05/2025 (within the deadline 
 1	Project Initialization --> Completed
 
 2	User Authentication	--> Completed
+
 3	User Profiles --> Completed
+
 4	Post Pet for Adoption --> Completed
+
 5	Request Adoption --> Completed
-6	Pet Details	Design individual pet detail pages --> Completed
+
+6	Pet Details	 --> Completed
+
 7	Navigation & Homepage --> Completed
+
 8	Pet Listings --> Completed
+
 9	Manual Testing	--> Completed
 
 ## Submission 1 details:
@@ -53,9 +53,13 @@ Submission 1 has been completed around 10 PM on 15/05/2025 (within the deadline 
 Submission 2 is pending currently (7:54 PM - 16/05/2025)
 
 10	Chat Feature --> Not Started
+
 11	Deployment --> Not Started
+
 12	Final Testing --> Not Started
+
 13	Documentation --> Not Started
+
 14	Feedback Loop --> Not Started
 
 Refer to the original doc of the project tasks list --> https://docs.google.com/spreadsheets/d/1f3afC0OwQHprut96RTxuQlv_FwiG7i8Pc1foenJKKOw/edit?gid=0#gid=0
