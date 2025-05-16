@@ -48,7 +48,7 @@ Submission 1 has been completed around 10 PM on 15/05/2025 (within the deadline 
 
 9	Manual Testing	--> Completed
 
-## Submission 1 details:
+## Submission 2 details:
 
 Submission 2 is pending currently (7:54 PM - 16/05/2025)
 
